@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Congress 113: Senate</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row mt-3">
+
+            <div class="col d-flex justify-content-start align-items-center">
+
+                <img src="logo.png" alt="TGIF logo" class="m2 logo_size">
+                <span class="h1 ml-4">TGIF</span>
+
+            </div>
+
+            <div class="col d-flex justify-content-end">
+                <div class="align-self-center">
+                    <span>&#9993;</span>
+                    <span><a href="mailto:info@tgif.net">info@tgif.net</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3 mb-3 border_nav">
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">Home</a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Congress 113
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="house_data.html">House</a>
+                                    <a class="dropdown-item active">Senate</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Attendance
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="house_attendance_statistics.html">House</a>
+                                    <a class="dropdown-item" href="senate_attendance_statistics.html">Senate</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Party Loyalty
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="house_party_loyalty_statistics.html">House</a>
+                                    <a class="dropdown-item" href="senate_party_loyalty_statistics.html">Senate</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h2>Senators</h2>
+                <p class="text-justify">First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S. Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
+            </div>
+        </div>
+        <div id="table">
+            <div class="row">
+                <div class="col-4 mt-3 mb-3">
+
+                    <span class="mr-4">Filter by Party:</span>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckboxRepublican" v-model="checkedParty" value="R">
+                        <label class="form-check-label" for="inlineCheckboxRepublican">Republican</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckboxDemocrat" v-model="checkedParty" value="D">
+                        <label class="form-check-label" for="inlineCheckboxDemocrat">Democrat</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckboxIndependent" v-model="checkedParty" value="I">
+                        <label class="form-check-label" for="inlineCheckboxIndependent">Independent</label>
+                    </div>
+
+                </div>
+                <div class="col mt-3 mb-3 d-flex justify-content-end">
+                    <span class="mr-4">Filter by State:</span>
+                    <select v-model="checkedState">
+                        <option value="all">All the states</option>
+                        <option v-for="(state,index) in state" :key="index" v-bind:value="state">{{state}}</option>
+                    </select>
+
+
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col">
+
+                    <table class="table table-dark text-center table_borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Party</th>
+                                <th scope="col">State</th>
+                                <th scope="col">Years in Office</th>
+                                <th scope="col">% Votes w/ Party</th>
+                            </tr>
+                        </thead>
+
+                    </table>
+                    <div v-if="isLoading">
+                        <div class="lds-dual-ring"></div>
+                    </div>
+                    <table v-else class="table text-center table_borderless">
+
+                        <tbody id="table">
+                            <tr v-for="(senator, index) in filter" :key="index">
+                                <td><a v-bind:href="senator.url" target="_blank">{{senator.last_name}} {{senator.middle_name}} {{senator.first_name}}</a></td>
+                                <td>{{senator.party}}</td>
+                                <td>{{senator.state}}</td>
+                                <td>{{senator.seniority}}</td>
+                                <td>{{senator.votes_with_party_pct}} %</td>
+                            </tr>
+
+                        </tbody>
+
+
+                    </table>
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="w-100 bg-light text-center footer p-3 mb-3 mt-3">
+                    <p>&#9400; 2&Oslash;16 TGIF | All Rights Reserved</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!--    vue script-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!--    my javascript files-->
+
+    <script src="main.js"></script>
+
+    <!--    bootstrap-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>

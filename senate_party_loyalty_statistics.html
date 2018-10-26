@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title> Senate Party Loyalty</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+
+        <div class="row mt-3">
+
+            <div class="col d-flex justify-content-start align-items-center">
+
+                <img src="logo.png" alt="TGIF logo" class="m2 logo_size">
+                <span class="h1 ml-4">TGIF</span>
+
+            </div>
+
+            <div class="col d-flex justify-content-end">
+                <div class="align-self-center">
+                    <span>&#9993;</span>
+                    <span><a href="mailto:info@tgif.net">info@tgif.net</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3 mb-3 border_nav">
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">Home</a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Congress 113
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="house_data.html">House</a>
+                                    <a class="dropdown-item" href="senate_data.html">Senate</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Attendance
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="house_attendance_statistics.html">House</a>
+                                    <a class="dropdown-item" href="senate_attendance_statistics.html">Senate</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Party Loyalty
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="house_party_loyalty_statistics.html">House</a>
+                                    <a class="dropdown-item active">Senate</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <div id="table">
+            <div class="row">
+                <div class="col-6">
+
+                    <h2>Party Loyalty</h2>
+                    <p class="text-justify mt-3 mb-4">Those who consider themselves to be strong partisans, strong Democrats and strong Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and legislation that backs their party's agenda. </p>
+
+
+                </div>
+
+                <div class="col">
+                    <h2 class="h4 d-flex justify-content-end">Senate at a glance</h2>
+
+
+
+                    <table class="table table-dark text-center table_borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">Party</th>
+                                <th scope="col">Number of Reps</th>
+                                <th scope="col">% Voted with Prty</th>
+                            </tr>
+                        </thead>
+
+                    </table>
+
+                    <div v-if="isLoading">
+                        <div class="lds-dual-ring"></div>
+                    </div>
+
+                    <table v-else class="table text-center table_borderless">
+
+                        <tbody id="at_glance_table">
+                            <tr>
+                                <td>Democrats</td>
+                                <td>{{democratsMembersNumber}}</td>
+                                <td>{{democratsMembersPct}} %</td>
+                            </tr>
+                            <tr>
+                                <td>Republicans</td>
+                                <td>{{republicansMembersNumber}}</td>
+                                <td>{{republicansMembersPct}} %</td>
+                            </tr>
+                            <tr>
+                                <td>Independents</td>
+                                <td>{{independentsMembersNumber}}</td>
+                                <td>{{independentsMembersPct}} %</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td>{{totalMembersNumber}}</td>
+                                <td>{{totalMembersPct}} %</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+
+            <div class="row">
+
+                <div class="col">
+
+                    <h2 class="h4 d-flex justify-content-end">Least Loyal (Bottom 10% of Party)</h2>
+
+                    <table class="table table-dark text-center table_borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Number Party Votes</th>
+                                <th scope="col">% Party Votes</th>
+                            </tr>
+                        </thead>
+
+                    </table>
+
+                    <div v-if="isLoading">
+                        <div class="lds-dual-ring"></div>
+                    </div>
+
+                    <table v-else class="table text-center table_borderless">
+
+                        <tbody id="least_loyal_table">
+
+                            <tr v-for="(senator, index) in leastLoyal" :key="index">
+                                <td><a v-bind:href="senator.url" target="_blank">{{senator.last_name}} {{senator.middle_name}} {{senator.first_name}}</a></td>
+                                <td>{{senator.total_votes}}</td>
+                                <td>{{senator.votes_with_party_pct}} %</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="col">
+
+                    <h2 class="h4 d-flex justify-content-end">Most Loyal (Top 10% of Party)</h2>
+
+                    <table class="table table-dark text-center table_borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Number Party Votes</th>
+                                <th scope="col">% Party Votes</th>
+                            </tr>
+                        </thead>
+
+                    </table>
+
+                    <div v-if="isLoading">
+                        <div class="lds-dual-ring"></div>
+                    </div>
+
+                    <table v-else class="table text-center table_borderless">
+
+                        <tbody id="most_loyal_table">
+                            <tr v-for="(senator, index) in mostLoyal" :key="index">
+                                <td><a v-bind:href="senator.url" target="_blank">{{senator.last_name}} {{senator.middle_name}} {{senator.first_name}}</a></td>
+                                <td>{{senator.total_votes}}</td>
+                                <td>{{senator.votes_with_party_pct}} %</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="w-100 bg-light text-center footer p-3 mb-3 mt-3">
+                    <p>&#9400; 2&Oslash;16 TGIF | All Rights Reserved</p>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <!--    Vue script-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!--    JS script-->
+
+    <script src="main.js"></script>
+
+    <!--    Bootstrap script-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+</body>
+</html>
