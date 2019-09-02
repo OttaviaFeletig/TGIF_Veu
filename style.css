@@ -18,6 +18,7 @@ p {
 .table_borderless th,
 .table_borderless td {
     border-style: none;
+    width: 10%;
 }
 
 .logo_size {
